@@ -1,12 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class News {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
-  @Column('time')
-  created_at: string;
+  // @Column('time')
+  // created_at: string;
 
   @Column('varchar')
   title: string;
@@ -19,4 +19,20 @@ export class News {
 
   @Column('varchar')
   category: string;
+
+  @Column('varchar', {
+    unique: true,
+    nullable: false,
+  })
+  slug: string;
+
+  @BeforeInsert()
+  checkSlugInsert() {
+    if (!this.slug) this.slug = this.title;
+
+    this.slug = this.slug
+      .toLowerCase()
+      .replaceAll(' ', '_')
+      .replaceAll("'", '');
+  }
 }
