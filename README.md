@@ -4,8 +4,22 @@
 
 # Dualiza API
 
-1. Levantar base de datos
+1. Instalar dependencias
+
+```
+npm install
+```
+
+2. Renombrar `.env.template` a `.env` y definir las variables de entorno
+
+3. Levantar base de datos
 
 ```
 docker compose up -d
+```
+
+4. Levantar proyecto
+
+```
+npm start
 ```
