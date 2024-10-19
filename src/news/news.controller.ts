@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('news')
 export class NewsController {
@@ -21,13 +23,13 @@ export class NewsController {
   }
 
   @Get()
-  findAll() {
-    return this.newsService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.newsService.findAll(paginationDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.newsService.findOne(+id);
+    return this.newsService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,6 +39,6 @@ export class NewsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.newsService.remove(+id);
+    return this.newsService.remove(id);
   }
 }
