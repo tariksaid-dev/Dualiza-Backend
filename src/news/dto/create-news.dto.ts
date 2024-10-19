@@ -1,9 +1,11 @@
+import { Type } from 'class-transformer';
 import { IsOptional, IsString, MinLength } from 'class-validator';
 
 export class CreateNewsDto {
-  // @IsString()
-  // // @IsDateString()
-  // created_at: string;
+  @IsString()
+  @IsOptional()
+  @Type(() => Date)
+  createdAt: Date;
 
   @IsString()
   @MinLength(5)

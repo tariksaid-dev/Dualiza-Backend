@@ -11,8 +11,8 @@ export class News {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  // @Column('time')
-  // created_at: string;
+  @Column('date')
+  created_at: Date;
 
   @Column('varchar')
   title: string;
@@ -40,6 +40,11 @@ export class News {
       .toLowerCase()
       .replaceAll(' ', '_')
       .replaceAll("'", '');
+  }
+
+  @BeforeInsert()
+  checkDate() {
+    this.created_at = new Date();
   }
 
   @BeforeUpdate()
