@@ -55,8 +55,22 @@ export class NewsService {
     return $new;
   }
 
-  update(id: number, updateNewsDto: UpdateNewsDto) {
-    return `This action updates a #${id} news`;
+  async update(id: string, updateNewsDto: UpdateNewsDto) {
+    const $new = await this.newsRepository.preload({
+      id: +id,
+      ...updateNewsDto,
+    });
+
+    if (!$new) throw new NotFoundException(`Product with id: ${id} not found`);
+
+    try {
+      await this.newsRepository.save($new);
+      return $new;
+    } catch (error) {
+      {
+        this.handleDBExceptions(error);
+      }
+    }
   }
 
   async remove(id: string) {
