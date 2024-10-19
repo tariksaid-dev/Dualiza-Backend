@@ -59,8 +59,8 @@ export class NewsService {
     return `This action updates a #${id} news`;
   }
 
-  async remove(term: string) {
-    const new$ = await this.findOne(term);
+  async remove(id: string) {
+    const new$ = await this.findOne(id);
 
     await this.newsRepository.remove(new$);
   }
