@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NewsModule } from './news/news.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { NewsModule } from './news/news.module';
       synchronize: true,
     }),
     NewsModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
