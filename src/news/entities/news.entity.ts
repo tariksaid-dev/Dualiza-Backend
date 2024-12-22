@@ -2,6 +2,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -11,8 +12,8 @@ export class News {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column('date')
-  created_at: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
   @Column('varchar')
   title: string;
@@ -40,11 +41,6 @@ export class News {
       .toLowerCase()
       .replaceAll(' ', '_')
       .replaceAll("'", '');
-  }
-
-  @BeforeInsert()
-  checkDate() {
-    this.created_at = new Date();
   }
 
   @BeforeUpdate()
