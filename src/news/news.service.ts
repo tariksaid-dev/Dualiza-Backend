@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 
 import { News } from './entities/news.entity';
 import { CreateNewsDto } from './dto/create-news.dto';
@@ -32,10 +32,10 @@ export class NewsService {
     }
   }
 
-  findAll(paginationDto: PaginationDto) {
+  async findAll(paginationDto: PaginationDto) {
     const { limit = 10, offset = 0 } = paginationDto;
 
-    return this.newsRepository.find({
+    return await this.newsRepository.find({
       take: limit,
       skip: offset,
     });
@@ -84,5 +84,15 @@ export class NewsService {
     throw new InternalServerErrorException(
       'Unexpected error, check server logs',
     );
+  }
+
+  async deleteAllNews(): Promise<DeleteResult> {
+    const query = this.newsRepository.createQueryBuilder('news');
+
+    try {
+      return await query.delete().where({}).execute();
+    } catch (error) {
+      this.handleDBExceptions(error);
+    }
   }
 }
